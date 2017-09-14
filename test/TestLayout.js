@@ -33,13 +33,17 @@ export default class TestLayout extends React.Component<{}, { width: number, hei
                 </button>
 
                 <div className="layoutRoot">
-
-                    <Resizable minConstraints={[100, 120]} maxConstraints={[250, 250]} className="box"
-                               height={this.state.height} width={this.state.width}
-                               onResize={this.onResize}>
+                    <Resizable className="box"
+                               // minConstraints={[150, 150]}
+                               // maxConstraints={[300, 300]}
+                               height={this.state.height}
+                               width={this.state.width}
+                               left={this.state.left}
+                               top={this.state.top}
+                               onResize={this.onResize}
+                               allResizeHandle={true}>
                         <div style={{
                             position: 'absolute',
-                            overflow: 'hidden',
                             left: this.state.left + 'px',
                             top: this.state.top + 'px',
                             width: this.state.width + 'px',
