@@ -6,7 +6,7 @@ export default class TestLayout extends React.Component<{}, { width: number, hei
     state = {
         width: 150,
         height: 150,
-        left: 200,
+        left: 7,
         top: 300
     };
 
