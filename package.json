@@ -4,7 +4,6 @@
   "description": "A component that is resizable with handles.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint --ext .js,.jsx lib/ test/; flow",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "bash build.sh",
     "build-example": "webpack",
@@ -12,7 +11,6 @@
     "watch": "webpack --progress --watch",
     "prepare": "npm run build",
     "validate": "yarn check",
-    "preversion": "npm run lint",
     "version": "git add CHANGELOG.md",
     "postversion": "git push && git push --tags"
   },
@@ -44,7 +42,6 @@
     "css-loader": "^0.28.5",
     "eslint": "^4.5.0",
     "eslint-plugin-react": "^7.2.1",
-    "flow-bin": "^0.53.1",
     "lodash": "^4.3.0",
     "pre-commit": "^1.1.2",
     "react": "^15.6.1",
@@ -63,9 +60,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
-  },
-  "pre-commit": [
-    "lint",
-    "validate"
-  ]
+  }
 }

@@ -23,7 +23,6 @@
         box-sizing: border-box;
         margin-bottom: 10px;
         overflow: hidden;
-        position: relative;
         margin: 20px;
       }
       .box .text {
@@ -36,10 +35,18 @@
         margin: auto;
         height: 36px;
       }
-      .box3 .react-resizable-handle {
+      .box3 .react-se-resizable-handle ,
+      .box3 .react-sw-resizable-handle,
+      .box3 .react-nw-resizable-handle,
+      .box3 .react-ne-resizable-handle
+
+      {
         display: none;
       }
-      .box3:hover .react-resizable-handle {
+      .box3 .react-se-resizable-handle:hover ,
+      .box3 .react-sw-resizable-handle:hover,
+      .box3 .react-nw-resizable-handle:hover,
+      .box3 .react-ne-resizable-handle:hover {
         display: block;
       }
     </style>
