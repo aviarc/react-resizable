@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.7.3 (Sep 19, 2017)
+- Provide onInitialSizeCalculated callback, calculate children size automatically based on dom reference.
+- Remove flow types.
+
 ### 1.7.2 (Aug 21, 2017)
 
 - Pkg: Add `react-draggable@3.0.0` to version range.
