@@ -1,67 +1,86 @@
-// @flow
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import Resizable from './Resizable'
-import type {Props as ResizableProps, ResizeCallbackData} from './Resizable'
+import Resizable from './Resizable.jsx'
 
-type State = {width: number, height: number};
+export default class ResizableBox extends React.Component {
 
-// An example use of Resizable.
-export default class ResizableBox extends React.Component<ResizableProps, State> {
-
-  static propTypes = {
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired
-  };
-
-  static defaultProps = {
-    handleSize: [10,10]
-  };
-
-  state: State = {
-    width: this.props.width,
-    height: this.props.height
-  };
-
-  componentWillReceiveProps(nextProps: ResizableProps) {
-    if (nextProps.width !== this.props.width || nextProps.height !== this.props.height) {
-      this.setState({
-        width: nextProps.width,
-        height: nextProps.height
-      })
+    static propTypes = {
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+        handleSize: PropTypes.array,
+        lockAspectRatio: PropTypes.bool,
+        axis: PropTypes.oneOf(['both', 'x', 'y', 'none']),
+        minConstraints: PropTypes.arrayOf(PropTypes.number),
+        maxConstraints: PropTypes.arrayOf(PropTypes.number),
+        onResizeStop: PropTypes.func,
+        onResizeStart: PropTypes.func,
+        onResize: PropTypes.func,
+        draggableOpts: PropTypes.object
     }
-  }
 
-  render(){
-    const {handleSize, onResize, onResizeStart, onResizeStop, draggableOpts,
-         minConstraints, maxConstraints, lockAspectRatio, axis, width, height, ...props} = this.props
-    return (
-      <Resizable
-        handleSize={handleSize}
-        width={this.state.width}
-        height={this.state.height}
-        onResizeStart={onResizeStart}
-        onResize={this.onResize}
-        onResizeStop={onResizeStop}
-        draggableOpts={draggableOpts}
-        minConstraints={minConstraints}
-        maxConstraints={maxConstraints}
-        lockAspectRatio={lockAspectRatio}
-        axis={axis}>
-        <div style={{width: this.state.width + 'px', height: this.state.height + 'px'}} {...props}/>
-      </Resizable>
-    )
-  }
+    static defaultProps = {
+        handleSize: [10, 10],
+        lockAspectRatio: false,
+        axis: 'both',
+        minConstraints: [20, 20],
+        maxConstraints: [Infinity, Infinity],
+        allResizeHandle: false,
+        isActive: false,
+        onResizeStop: () => {
+        },
+        onResizeStart: () => {
+        },
+        onResize: () => {
+        },
+        draggableOpts: {}
+    }
 
-    onResize = (e, data) => {
+    state = {
+        width: this.props.width,
+        height: this.props.height
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.width !== this.props.width || nextProps.height !== this.props.height) {
+            this.setState({
+                width: nextProps.width,
+                height: nextProps.height
+            })
+        }
+    }
+
+    render = () =>
+        <Resizable
+            handleSize={this.props.handleSize}
+            width={this.state.width}
+            height={this.state.height}
+            onResizeStart={this.props.onResizeStart}
+            onResize={this.onResize}
+            onResizeStop={this.props.onResizeStop}
+            draggableOpts={this.props.draggableOpts}
+            minConstraints={this.props.minConstraints}
+            maxConstraints={this.props.maxConstraints}
+            lockAspectRatio={this.props.lockAspectRatio}
+            axis={this.props.axis}>
+            <div style={{
+                width: this.state.width + 'px',
+                height: this.state.height + 'px'
+            }}
+                 {...this.props}/>
+        </Resizable>
+
+    onResize = (event, data) => {
         const {size} = data
-        const {width, height} = size
+        this.persistEventIfFunction(event)
+        this.setState(size, this.resizeCallback(event, data))
+    }
 
-        if (this.props.onResize) {
-            e.persist && e.persist()
-            this.setState(size, () => this.props.onResize && this.props.onResize(e, data))
-        } else {
-            this.setState(size)
+    resizeCallback = (event, dimension) =>
+        this.props.onResize(event, dimension)
+
+    persistEventIfFunction = (event) => {
+        if (typeof event.persist === 'function') {
+            event.persist()
         }
     }
 

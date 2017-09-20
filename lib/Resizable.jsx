@@ -9,8 +9,8 @@ export default class Resizable extends React.Component {
         children: PropTypes.element.isRequired,
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
-        left: PropTypes.number.isRequired,
-        top: PropTypes.number.isRequired,
+        left: PropTypes.number,
+        top: PropTypes.number,
         handleSize: PropTypes.array,
         lockAspectRatio: PropTypes.bool,
         axis: PropTypes.oneOf(['both', 'x', 'y', 'none']),
@@ -33,6 +33,8 @@ export default class Resizable extends React.Component {
         maxConstraints: [Infinity, Infinity],
         allResizeHandle: false,
         isActive: false,
+        left:0,
+        top:0,
         onInitialSizeCalculated: () => {
         },
         onResizeStop: () => {
@@ -56,6 +58,7 @@ export default class Resizable extends React.Component {
         const width = this.divElement.clientWidth
         const height = this.divElement.clientHeight
         this.props.onInitialSizeCalculated(width, height)
+        // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({width, height})
     }
 
@@ -313,8 +316,9 @@ export default class Resizable extends React.Component {
     getParameters = (node, dimension) =>
         ({node, size: dimension})
 
-    toDimension = (state) =>
-        ({width: state.width, height: state.height, left: state.left, top: state.top})
+    toDimension = (state) =>({
+        width: state.width, height: state.height, left: state.left, top: state.top
+    })
 
     onResizeStopState = () =>
         ({resizableHandle: '', resizing: false})
@@ -366,7 +370,7 @@ export default class Resizable extends React.Component {
         this.props.isActive ? {...style.resizableHandle, ...handleStyle} : null
 
     isResizeHandle = (handleName) =>
-        handleName ? handleName.indexOf('-resizable-handle') != -1 && handleName.indexOf('react-') != -1 : false
+        handleName ? handleName.indexOf('-resizable-handle') !== -1 && handleName.indexOf('react-') !== -1 : false
 
     assignDivElement = (divElement) =>
         this.divElement = divElement

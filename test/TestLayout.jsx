@@ -2,7 +2,7 @@ import * as React from 'react'
 import Resizable from '../lib/Resizable.jsx'
 import 'style-loader!css-loader!../css/styles.css'
 
-export default class TestLayout extends React.Component{
+export default class TestLayout extends React.Component {
 
     state = {
         width: 150,
@@ -11,24 +11,15 @@ export default class TestLayout extends React.Component{
         top: 300
     };
 
-    onResize = (event, {size}) => {
-        this.setState(
-            {
-                width: size.width,
-                height: size.height,
-                left: size.left,
-                top: size.top
-            }
-        )
-    };
-
     render() {
         return (
             <div>
-                <button onClick={this.onClick} style={{marginBottom: '10px'}}>Reset first element's width/height
+                <button onClick={this.resetState}
+                        style={style.button}>
+                    Reset width and height
                 </button>
 
-                <div className="layoutRoot">
+                <div className="layoutRoot">clear
                     <Resizable className="box"
                                height={this.state.height}
                                width={this.state.width}
@@ -54,4 +45,28 @@ export default class TestLayout extends React.Component{
         )
     }
 
+    onResize = (event, {size}) => {
+        this.setState(
+            {
+                width: size.width,
+                height: size.height,
+                left: size.left,
+                top: size.top
+            }
+        )
+    }
+
+    resetState = () => {
+        this.setState({
+            width: 150, height: 150,
+            left: 200, top: 300
+        })
+    };
+
+}
+
+const style = {
+    button: {
+        marginBottom: '10px'
+    }
 }

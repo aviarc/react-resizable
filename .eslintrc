@@ -1,36 +1,25 @@
 {
-  "root": true,
-  "parser": "babel-eslint",
-  "plugins": [
-    "react"
+  "extends": [
+    "aviarc"
   ],
-  "extends": "eslint:recommended",
-  "rules": {
-    "strict": 0,
-    "quotes": [0, "single"],
-    "curly": [1, "multi-line"],
-    "camelcase": 0,
-    "comma-dangle": 0,
-    "dot-notation": 0,
-    "no-console": 0,
-    "no-use-before-define": [1, "nofunc"],
-    "no-underscore-dangle": 0,
-    "no-unused-vars": 0,
-    "new-cap": 0,
-    "react/jsx-uses-vars": 1,
-    "semi": [1, "always"]
-  },
-  env: {
+  "env": {
+    "amd": true,
     "browser": true,
-    "node": true
-  },
-  "ecmaFeatures": {
-    "jsx": true
+    "node": true,
+    "mocha": true
   },
   "globals": {
-    // For Flow
-    "ReactElement",
-    "ReactClass",
-    "SyntheticEvent"
+    "console": true
+  },
+  "rules": {
+    "no-console": "off",
+    "react/no-find-dom-node": "off",
+    "react/forbid-foreign-prop-types": "off",
+    "max-lines": [
+      "error",
+      {
+        "max": 500
+      }
+    ]
   }
 }
