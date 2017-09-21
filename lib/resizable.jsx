@@ -1,8 +1,7 @@
-/* eslint-disable max-lines */
 import React from 'react'
 import PropTypes from 'prop-types'
-import cloneElement from './cloneElement'
 import {DraggableCore} from 'react-draggable'
+import ReactDOM from 'react-dom'
 
 export default class Resizable extends React.Component {
 
@@ -22,7 +21,6 @@ export default class Resizable extends React.Component {
         onResize: PropTypes.func,
         draggableOpts: PropTypes.object,
         allResizeHandle: PropTypes.bool,
-        onInitialSizeCalculated: PropTypes.func,
         isActive: PropTypes.bool
     }
 
@@ -36,8 +34,6 @@ export default class Resizable extends React.Component {
         isActive: false,
         left:0,
         top:0,
-        onInitialSizeCalculated: () => {
-        },
         onResizeStop: () => {
         },
         onResizeStart: () => {
@@ -56,9 +52,8 @@ export default class Resizable extends React.Component {
     }
 
     componentDidMount() {
-        const width = this.divElement.clientWidth
-        const height = this.divElement.clientHeight
-        this.props.onInitialSizeCalculated(width, height)
+        const width = this.domElement.clientWidth
+        const height = this.domElement.clientHeight
         // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({width, height})
     }
@@ -90,7 +85,7 @@ export default class Resizable extends React.Component {
         return cloneElement(children, {
             ...p,
             className,
-            ref: this.assignDivElement.bind(this),
+            ref: this.assignDomElement.bind(this),
             children: [
                 children.props.children,
                 <DraggableCore {...draggableOpts}
@@ -373,8 +368,8 @@ export default class Resizable extends React.Component {
     isResizeHandle = (handleName) =>
         handleName ? handleName.indexOf('-resizable-handle') !== -1 && handleName.indexOf('react-') !== -1 : false
 
-    assignDivElement = (divElement) =>
-        this.divElement = divElement
+    assignDomElement = (element) =>
+        this.domElement = ReactDOM.findDOMNode(element)
 
     getRatio = () =>
         this.state.width / this.state.height
@@ -447,4 +442,14 @@ const style = {
         right: '0',
         cursor: 'nesw-resize'
     }
+}
+
+function cloneElement(element, props: Object) {
+    if (props.style && element.props.style) {
+        props.style = {...element.props.style, ...props.style}
+    }
+    if (props.className && element.props.className) {
+        props.className = `${element.props.className} ${props.className}`
+    }
+    return React.cloneElement(element, props)
 }
