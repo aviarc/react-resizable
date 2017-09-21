@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.7.4 (Sep 22, 2017)
+ - allow component to be resized from all four corners
+
 ### 1.7.3 (Sep 19, 2017)
  - Provide onInitialSizeCalculated callback, calculate children size automatically based on dom reference.
  - Remove flow types.
