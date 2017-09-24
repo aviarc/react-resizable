@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Resizable from '../lib/resizable.jsx'
+import Resizable from '../lib/Resizable.js'
 import 'style-loader!css-loader!../css/styles.css'
 
 export default class TestLayout extends React.Component {
