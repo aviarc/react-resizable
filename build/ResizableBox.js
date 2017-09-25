@@ -16,9 +16,9 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _resizable = require('./resizable.js');
+var _Resizable = require('./Resizable.js');
 
-var _resizable2 = _interopRequireDefault(_resizable);
+var _Resizable2 = _interopRequireDefault(_Resizable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,7 +49,7 @@ var ResizableBox = function (_React$Component) {
             height: _this.props.height
         }, _this.render = function () {
             return React.createElement(
-                _resizable2.default,
+                _Resizable2.default,
                 {
                     handleSize: _this.props.handleSize,
                     width: _this.state.width,
