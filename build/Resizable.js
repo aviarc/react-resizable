@@ -30,7 +30,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /* eslint-disable react/jsx-filename-extension */
+
 
 var Resizable = function (_React$Component) {
     _inherits(Resizable, _React$Component);
@@ -94,7 +95,9 @@ var Resizable = function (_React$Component) {
             }
 
             _this.persistEventIfFunction(event);
-            _this.setState(dimension, _this.resizeCallback(event, node, dimension));
+            _this.setState(dimension, function () {
+                return _this.resizeCallback(event, node, dimension);
+            });
         }, _this.onResizeStart = function (event, _ref3) {
             var node = _ref3.node,
                 x = _ref3.x,
@@ -105,12 +108,16 @@ var Resizable = function (_React$Component) {
             }
             var resizeStartState = _this.onResizeStartState(x, y);
             _this.persistEventIfFunction(event);
-            _this.setState(resizeStartState, _this.resizeStartCallback(event, node, _this.toDimension(_this.state)));
+            _this.setState(resizeStartState, function () {
+                return _this.resizeStartCallback(event, node, _this.toDimension(_this.state));
+            });
         }, _this.onResizeStop = function (event, _ref4) {
             var node = _ref4.node;
 
             _this.persistEventIfFunction(event);
-            _this.setState(_this.onResizeStopState(), _this.resizeStopCallback(event, node, _this.toDimension(_this.state)));
+            _this.setState(_this.onResizeStopState(), function () {
+                return _this.resizeStopCallback(event, node, _this.toDimension(_this.state));
+            });
         }, _this.getDimension = function (x, y, deltaX, deltaY) {
             switch (_this.state.resizableHandle) {
                 case 'react-nw-resizable-handle':
@@ -310,10 +317,7 @@ var Resizable = function (_React$Component) {
     _createClass(Resizable, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var width = this.domElement.clientWidth;
-            var height = this.domElement.clientHeight;
-            // eslint-disable-next-line react/no-did-mount-set-state
-            this.setState({ width: width, height: height });
+            this.setSizeFromParent();
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -357,6 +361,16 @@ var Resizable = function (_React$Component) {
                     this.renderResizeHandle()
                 )]
             }));
+        }
+    }, {
+        key: 'setSizeFromParent',
+        value: function setSizeFromParent() {
+            if (!this.state.width) {
+                this.setState({ width: this.domElement.clientWidth });
+            }
+            if (!this.state.height) {
+                this.setState({ height: this.domElement.clientHeight });
+            }
         }
     }]);
 
