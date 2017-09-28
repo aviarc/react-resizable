@@ -318,6 +318,7 @@ var Resizable = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.setSizeFromParent();
+            this.setPositionFromParent();
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -372,6 +373,16 @@ var Resizable = function (_React$Component) {
                 this.setState({ height: this.domElement.clientHeight });
             }
         }
+    }, {
+        key: 'setPositionFromParent',
+        value: function setPositionFromParent() {
+            if (!this.state.left) {
+                this.setState({ left: this.domElement.offsetLeft });
+            }
+            if (!this.state.top) {
+                this.setState({ top: this.domElement.offsetTop });
+            }
+        }
     }]);
 
     return Resizable;
@@ -379,8 +390,8 @@ var Resizable = function (_React$Component) {
 
 Resizable.propTypes = {
     children: _propTypes2.default.element.isRequired,
-    width: _propTypes2.default.number.isRequired,
-    height: _propTypes2.default.number.isRequired,
+    width: _propTypes2.default.number,
+    height: _propTypes2.default.number,
     left: _propTypes2.default.number,
     top: _propTypes2.default.number,
     handleSize: _propTypes2.default.array,
@@ -403,6 +414,8 @@ Resizable.defaultProps = {
     maxConstraints: [Infinity, Infinity],
     allResizeHandle: false,
     isActive: false,
+    width: 100,
+    height: 100,
     left: 0,
     top: 0,
     onResizeStop: function onResizeStop() {},

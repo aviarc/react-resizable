@@ -21,19 +21,19 @@ export default class TestLayout extends React.Component {
 
                 <div className="layoutRoot">clear
                     <Resizable className="box"
-                               height={this.state.height}
-                               width={this.state.width}
-                               left={this.state.left}
-                               top={this.state.top}
+                               // height={this.state.height}
+                               // width={this.state.width}
+                               // left={this.state.left}
+                               // top={this.state.top}
                                onResize={this.onResize}
                                allResizeHandle
                                isActive>
                         <div style={{
                             position: 'absolute',
-                            left: this.state.left + 'px',
-                            top: this.state.top + 'px',
-                            width: this.state.width + 'px',
-                            height: this.state.height + 'px',
+                             left: this.state.left + 'px',
+                             top: this.state.top + 'px',
+                             width: this.state.width + 'px',
+                             height: this.state.height + 'px',
                             border: '1px solid red',
                             backgroundColor: 'green'
                         }}>
